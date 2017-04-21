@@ -8,7 +8,7 @@ from operator import itemgetter
 
 def number1(reader):
 
-        akey = input("please give me appellation: ").upper()
+        akey = input("please give me appellation: ").upper()#
         d = dict()
         for row in reader:
             d[row[0]] = (row[1],row[2])
