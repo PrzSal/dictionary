@@ -26,7 +26,7 @@ def number1(reader):
     print("Wrong appellation, return to main menu")
 
 
-def number2(reader):
+def number2(reader, row):
     d = {}
     akey = input("please give me appellation: ").upper()
     for row in reader:
@@ -34,16 +34,16 @@ def number2(reader):
         print(row[0])
         if akey == row[0]:
             print("I know this appellation")
-            number2(reader)
+            number2(reader, row)
     if akey != row[0]:
         definition = input("Please give me definition: ")
         source = input("Please give me source: ")
-        dictwrite = open("dict.csv", "a") # create file to write in the end line
+        dictwrite = open("dict1.csv", "a") # create file to write in the end line
         complete = [akey + ", " + definition + ", " + source + "\n"]
         dictwrite.writelines(complete) #save
         dictwrite.close()
         loop = True
-
+    return row
 
 def number3(reader):
     d = dict()
@@ -72,6 +72,7 @@ def main():
     loop =True
 
     while loop:
+        row = []
         csvfile = open("dict1.csv", "r")   # open cvs and setup csv.reader settings
         csvfile.seek
         upper_stream = (line.upper() for line in csvfile) # Create upper letter
@@ -82,7 +83,7 @@ def main():
             print("menu 1")
             number1(reader)
         elif choice == 2:
-            number2(reader)
+            number2(reader, row)
         elif choice == 3:
             number3(reader)
         elif choice == 4:
