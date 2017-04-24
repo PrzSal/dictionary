@@ -15,26 +15,29 @@ def print_menu():
 
 
 def number1(reader):
+    dictionary = dict()
     akey = input("please give me appellation: ").upper()
-    d = {}
-    for row in reader:
-        d[row[0]] = (row[1],row[2])
-
-        if akey == row[0]:
-            print(",".join(d[row[0]]))
-            loop = True
-    print("Wrong appellation, return to main menu")
+    if len(akey) > 0:
+        for row in reader:
+            dictionary[row[0]] = (row[1],row[2])
+            if akey == row[0]:
+                print(",".join(dictionary[row[0]]))
+                loop = True
+                break
+        else:
+            print("Wrong appellation, return to main menu")
 
 
 def number2(reader, row):
-    d = {}
+    dictionary = dict()
     akey = input("please give me appellation: ").upper()
     for row in reader:
-        d[row[0]] = (row[1],row[2])
+        dictionary[row[0]] = (row[1],row[2])
         print(row[0])
         if akey == row[0]:
             print("I know this appellation")
-            number2(reader, row)
+            number3(reader)
+            number2(reader,row)
     if akey != row[0]:
         definition = input("Please give me definition: ")
         source = input("Please give me source: ")
@@ -45,23 +48,24 @@ def number2(reader, row):
         loop = True
     return row
 
+
 def number3(reader):
-    d = dict()
+    dictionary = dict()
     for row in reader:
-        d[row[0]] = (row[1],row[2])
-        sorted_lst = sorted(d, key=str.lower)
+        dictionary[row[0]] = (row[1],row[2])
+        sorted_lst = sorted(dictionary, key=str.lower)
     print(", ".join(sorted_lst))
     loop = True
 
 
 def number4(reader):
-    d = dict()
+    dictionary = dict()
     akey = input("Please put first letter: ").upper()
     if len(akey) == 1 and akey.isalpha():
         for row in reader:
-            d[row[0]] = (row[1],row[2])
-            if any(akey in row[0] in col for col in row):
-                print(row[0]+":"+",".join(d[row[0]]))
+            dictionary[row[0]] = (row[1],row[2])
+            if any(akey in row[0][0] in col for col in row):
+                print(row[0]+":"+",".join(dictionary[row[0]]))
                 loop = True
     else:
         print("Wrong many letter, please again first letter: ")
@@ -73,6 +77,7 @@ def main():
 
     while loop:
         row = []
+        dictionary = dict()
         csvfile = open("dict1.csv", "r")   # open cvs and setup csv.reader settings
         csvfile.seek
         upper_stream = (line.upper() for line in csvfile) # Create upper letter
@@ -83,12 +88,16 @@ def main():
             print("menu 1")
             number1(reader)
         elif choice == 2:
+            print("menu 2")
             number2(reader, row)
         elif choice == 3:
+            print("menu 3")
             number3(reader)
         elif choice == 4:
+            print("menu 4")
             number4(reader)
         elif choice == 0:
+            print("Thank's for searching, Good Bye!")
             sys.exit()
     return reader
 
