@@ -15,16 +15,16 @@ def print_menu():
 
 
 def number1(reader):
-    dictionary = dict()
+    dictionary = {}
     akey = input("please give me appellation: ").upper()
     if len(akey) > 0:
         for row in reader:
-            dictionary[row[0]] = (row[1],row[2])
+            dictionary = {row[0]:(row[1],row[2])}
             if akey == row[0]:
                 print(",".join(dictionary[row[0]]))
                 loop = True
                 break
-        else:
+        if akey != row[0]:
             print("Wrong appellation, return to main menu")
 
 
@@ -42,7 +42,7 @@ def number2(reader, row):
         definition = input("Please give me definition: ")
         source = input("Please give me source: ")
         dictwrite = open("dict1.csv", "a") # create file to write in the end line
-        complete = [akey + ", " + definition + ", " + source + "\n"]
+        complete = [akey + "| " + definition + "| " + source + "\n"]
         dictwrite.writelines(complete) #save
         dictwrite.close()
         loop = True
@@ -50,10 +50,10 @@ def number2(reader, row):
 
 
 def number3(reader):
-    dictionary = dict()
+    dictionary = {}
     for row in reader:
         dictionary[row[0]] = (row[1],row[2])
-        sorted_lst = sorted(dictionary, key=str.lower)
+        sorted_lst = sorted(dictionary)
     print(", ".join(sorted_lst))
     loop = True
 
@@ -77,11 +77,11 @@ def main():
 
     while loop:
         row = []
-        dictionary = dict()
+        dictionary = {}
         csvfile = open("dict1.csv", "r")   # open cvs and setup csv.reader settings
         csvfile.seek
         upper_stream = (line.upper() for line in csvfile) # Create upper letter
-        reader = csv.reader(upper_stream, delimiter=",")
+        reader = csv.reader(upper_stream, delimiter="|")
         print_menu()
         choice = int(input("Enter your menu[1-4]: "))
         if choice == 1:
